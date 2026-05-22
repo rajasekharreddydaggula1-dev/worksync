@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import {
-  MdDashboard, MdFolder, MdCheckBox, MdViewKanban,
-  MdCalendarMonth, MdGroup, MdBarChart, MdNotifications,
-  MdSettings, MdClose, MdMenu,
+  MdDashboard, MdFolder, MdCheckBox,
+  MdGroup, MdNotifications,
+  MdSettings, MdClose,
 } from 'react-icons/md';
 import logo from '../assets/logo.jpeg';
 
@@ -10,10 +10,7 @@ const nav = [
   { to: '/', icon: MdDashboard, label: 'Dashboard' },
   { to: '/projects', icon: MdFolder, label: 'Projects' },
   { to: '/tasks', icon: MdCheckBox, label: 'Tasks' },
-  { to: '/kanban', icon: MdViewKanban, label: 'Kanban Board' },
-  { to: '/calendar', icon: MdCalendarMonth, label: 'Calendar' },
   { to: '/team', icon: MdGroup, label: 'Team' },
-  { to: '/reports', icon: MdBarChart, label: 'Reports' },
   { to: '/notifications', icon: MdNotifications, label: 'Notifications' },
   { to: '/settings', icon: MdSettings, label: 'Settings' },
 ];
