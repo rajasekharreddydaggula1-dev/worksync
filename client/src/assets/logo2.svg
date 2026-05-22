@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#030B4F;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0D1B6E;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Blue ring gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#2563EB;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- W letter gradient -->
+    <linearGradient id="wGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#93C5FD;stop-opacity:1"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle shadow -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#2563EB" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100" height="100" rx="22" ry="22" fill="url(#bgGrad)"/>
+
+  <!-- Subtle inner border -->
+  <rect width="100" height="100" rx="22" ry="22" fill="none" stroke="#1E3A8A" stroke-width="1.5"/>
+
+  <!-- Sync ring arc — top right -->
+  <path
+    d="M 70 26 A 32 32 0 0 1 84 52"
+    fill="none"
+    stroke="url(#ringGrad)"
+    stroke-width="5"
+    stroke-linecap="round"
+    filter="url(#glow)"
+  />
+  <!-- Arrow head top -->
+  <polygon points="70,26 63,19 79,17" fill="#60A5FA" filter="url(#glow)"/>
+
+  <!-- Sync ring arc — bottom left -->
+  <path
+    d="M 30 74 A 32 32 0 0 1 16 48"
+    fill="none"
+    stroke="url(#ringGrad)"
+    stroke-width="5"
+    stroke-linecap="round"
+    filter="url(#glow)"
+  />
+  <!-- Arrow head bottom -->
+  <polygon points="30,74 37,81 21,83" fill="#60A5FA" filter="url(#glow)"/>
+
+  <!-- W lettermark -->
+  <polyline
+    points="27,33 38,67 50,46 62,67 73,33"
+    fill="none"
+    stroke="url(#wGrad)"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#shadow)"
+  />
+</svg>
