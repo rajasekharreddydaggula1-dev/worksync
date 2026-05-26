@@ -4,40 +4,50 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-bg border border-surface-light rounded-lg p-3 text-xs">
-      <p className="text-white font-semibold mb-1">{label}</p>
+    <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-lg text-xs">
+      <p className="text-slate-700 font-semibold mb-2">{label}</p>
       {payload.map(p => (
-        <p key={p.name} style={{ color: p.color }}>{p.name}: {p.value}</p>
+        <div key={p.name} className="flex items-center gap-2 mb-1">
+          <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
+          <span className="text-slate-500">{p.name}:</span>
+          <span className="font-semibold text-slate-700">{p.value}</span>
+        </div>
       ))}
     </div>
   );
 };
 
 export default function ProjectOverviewChart({ data }) {
-  const [filter, setFilter] = useState('weekly');
+  const [filter, setFilter] = useState('Weekly');
   return (
-    <div className="bg-surface border border-surface-light rounded-xl p-5">
+    <div className="bg-white rounded-2xl p-5 shadow-card border border-slate-100">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-white font-semibold">Project Overview</h2>
-        <div className="flex gap-1 bg-bg rounded-lg p-1">
-          {['weekly', 'monthly'].map(f => (
+        <div>
+          <h2 className="text-slate-800 font-bold text-base">Project Overview</h2>
+          <p className="text-slate-400 text-xs mt-0.5">Task completion trends</p>
+        </div>
+        <div className="flex gap-1 bg-slate-100 rounded-xl p-1">
+          {['Weekly', 'Monthly'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${filter === f ? 'bg-primary text-white' : 'text-slate-400 hover:text-white'}`}>
-              {f.charAt(0).toUpperCase() + f.slice(1)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${filter === f ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>
+              {f}
             </button>
           ))}
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={240}>
-        <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-          <XAxis dataKey="day" tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: '#94a3b8', fontSize: 12 }} axisLine={false} tickLine={false} />
+      <ResponsiveContainer width="100%" height={220}>
+        <LineChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
+          <XAxis dataKey="day" tick={{ fill: '#94A3B8', fontSize: 11, fontWeight: 500 }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fill: '#94A3B8', fontSize: 11 }} axisLine={false} tickLine={false} />
           <Tooltip content={<CustomTooltip />} />
-          <Legend wrapperStyle={{ fontSize: '12px', color: '#94a3b8' }} />
-          <Line type="monotone" dataKey="completed" stroke="#6366f1" strokeWidth={2} dot={false} name="Completed" />
-          <Line type="monotone" dataKey="inProgress" stroke="#f59e0b" strokeWidth={2} dot={false} name="In Progress" />
-          <Line type="monotone" dataKey="pending" stroke="#ef4444" strokeWidth={2} dot={false} name="Pending" />
+          <Legend
+            wrapperStyle={{ fontSize: '12px', paddingTop: '12px' }}
+            formatter={(value) => <span style={{ color: '#64748B', fontWeight: 500 }}>{value}</span>}
+          />
+          <Line type="monotone" dataKey="completed" stroke="#22C55E" strokeWidth={2.5} dot={false} name="Completed" />
+          <Line type="monotone" dataKey="inProgress" stroke="#3B82F6" strokeWidth={2.5} dot={false} name="In Progress" />
+          <Line type="monotone" dataKey="pending" stroke="#CBD5E1" strokeWidth={2.5} dot={false} name="To Do" />
         </LineChart>
       </ResponsiveContainer>
     </div>

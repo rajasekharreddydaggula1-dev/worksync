@@ -7,6 +7,16 @@ import UpcomingTasks from '../components/UpcomingTasks';
 import RecentProjects from '../components/RecentProjects';
 import TeamActivity from '../components/TeamActivity';
 
+const weeklyData = [
+  { day: 'Mon', completed: 4, inProgress: 6, pending: 3 },
+  { day: 'Tue', completed: 6, inProgress: 5, pending: 4 },
+  { day: 'Wed', completed: 5, inProgress: 8, pending: 2 },
+  { day: 'Thu', completed: 8, inProgress: 4, pending: 5 },
+  { day: 'Fri', completed: 7, inProgress: 6, pending: 3 },
+  { day: 'Sat', completed: 3, inProgress: 2, pending: 1 },
+  { day: 'Sun', completed: 2, inProgress: 1, pending: 2 },
+];
+
 export default function DashboardPage() {
   const tasks = useSelector(s => s.tasks);
   const projects = useSelector(s => s.projects);
@@ -17,30 +27,20 @@ export default function DashboardPage() {
   const todo = tasks.filter(t => t.status === 'todo').length;
   const overdue = tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && t.status !== 'done').length;
 
-  const weeklyData = [
-    { day: 'Mon', completed: 4, inProgress: 6, pending: 3 },
-    { day: 'Tue', completed: 6, inProgress: 5, pending: 4 },
-    { day: 'Wed', completed: 5, inProgress: 8, pending: 2 },
-    { day: 'Thu', completed: 8, inProgress: 4, pending: 5 },
-    { day: 'Fri', completed: 7, inProgress: 6, pending: 3 },
-    { day: 'Sat', completed: 3, inProgress: 2, pending: 1 },
-    { day: 'Sun', completed: 2, inProgress: 1, pending: 2 },
+  const stats = [
+    { title: 'Total Projects', value: projects.length || 24, icon: MdFolder, iconBg: 'bg-purple-100', iconColor: 'text-purple-600', growth: 12 },
+    { title: 'Total Tasks', value: tasks.length || 153, icon: MdCheckBox, iconBg: 'bg-blue-100', iconColor: 'text-blue-600', growth: 8 },
+    { title: 'Completed Tasks', value: done || 89, icon: MdDoneAll, iconBg: 'bg-green-100', iconColor: 'text-green-600', growth: 16 },
+    { title: 'In Progress', value: inProgress || 37, icon: MdSync, iconBg: 'bg-orange-100', iconColor: 'text-orange-600', growth: -5 },
+    { title: 'Overdue Tasks', value: overdue || 8, icon: MdWarning, iconBg: 'bg-red-100', iconColor: 'text-red-500', growth: -3 },
   ];
 
   return (
-    <div className="p-4 lg:p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="text-slate-400 text-sm mt-1">WorkSync – Smart Project & Team Management</p>
-      </div>
+    <div className="p-5 lg:p-6 space-y-5 min-h-full bg-[#F1F5F9]">
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        <StatsCard title="Total Projects" value={projects.length} icon={MdFolder} color="bg-indigo-600" growth={12} />
-        <StatsCard title="Total Tasks" value={tasks.length} icon={MdCheckBox} color="bg-blue-600" growth={8} />
-        <StatsCard title="Completed" value={done} icon={MdDoneAll} color="bg-green-600" growth={15} />
-        <StatsCard title="In Progress" value={inProgress} icon={MdSync} color="bg-yellow-600" growth={-3} />
-        <StatsCard title="Overdue" value={overdue} icon={MdWarning} color="bg-red-600" growth={-5} subtitle="Needs attention" />
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {stats.map((s, i) => <StatsCard key={i} {...s} />)}
       </div>
 
       {/* Charts Row */}
@@ -48,10 +48,10 @@ export default function DashboardPage() {
         <div className="lg:col-span-2">
           <ProjectOverviewChart data={weeklyData} />
         </div>
-        <TaskPieChart completed={done} inProgress={inProgress} todo={todo} />
+        <TaskPieChart completed={done || 89} inProgress={inProgress || 37} todo={todo || 27} />
       </div>
 
-      {/* Middle Row */}
+      {/* Upcoming + Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UpcomingTasks tasks={tasks} />
         <TeamActivity activities={activities} />

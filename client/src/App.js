@@ -39,7 +39,7 @@ function AppInner() {
       })
       .catch(() => toast.error('Failed to connect to server. Is the backend running?'));
 
-    socket.emit('user:online', { name: 'Alice Johnson', role: 'Admin' });
+    socket.emit('user:online', { name: 'Kamal Raja', role: 'Project Manager' });
   }, [dispatch]);
 
   const onTaskCreated = useCallback((task) => {
@@ -88,9 +88,9 @@ function AppInner() {
 
   return (
     <BrowserRouter>
-      <div className="flex h-screen overflow-hidden bg-bg">
+      <div className="flex h-screen overflow-hidden bg-[#F1F5F9]">
         <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col lg:ml-60 overflow-hidden">
+        <div className="flex-1 flex flex-col lg:ml-64 overflow-hidden">
           <Navbar setOpen={setSidebarOpen} />
           <main className="flex-1 overflow-y-auto">
             <Routes>
@@ -107,7 +107,7 @@ function AppInner() {
           </main>
         </div>
       </div>
-      <ToastContainer position="bottom-right" autoClose={3000} theme="dark" />
+      <ToastContainer position="bottom-right" autoClose={3000} theme="light" />
     </BrowserRouter>
   );
 }
